@@ -1,7 +1,8 @@
 <div class="container mt-3">
     <h1>게시판 입니다.</h1>
-    <a href="/posts/new">글 쓰기</a> <br>
-    
+    <div class="text-right mb-1">
+        <a class="btn btn-outline-primary btn-sm" role="button" href="/posts/new">글 쓰기</a> <br>
+    </div>
     <table class="table table-hover">
       <thead>
         <tr>
@@ -9,15 +10,17 @@
           <th scope="col">Title</th>
           <th scope="col">Body</th>
           <th scope="col">Date</th>
+          <th scope="col">Enter</th>
         </tr>
       </thead>
       <tbody>
-        <% @posts.reverse.each do |p| %>
+        <% @posts.each do |p| %>
             <tr>
                 <th scope="row"><%= p.id %></th>
                 <td><%= p.title %></td>
                 <td><%= p.body %></td>
-                <td><%= p.created_at %> <br></td>
+                <td><%= p.created_at %></td>
+                <td><a href="/posts/<%=p.id%>">Enter</a></td>
             </tr>
         <% end %>
       </tbody>

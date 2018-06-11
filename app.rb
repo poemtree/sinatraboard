@@ -46,7 +46,7 @@ get '/lunch' do
 end
 
 get '/posts' do
-    @posts = Post.all
+    @posts = Post.all.reverse
     erb :posts
 end
 
@@ -59,5 +59,13 @@ get '/posts/create' do
     @body = params[:body]
     Post.create(title: @title, body: @body )
     erb :create
+end
+
+# CRUD - Read
+# Using variable routing for searching
+get '/posts/:id' do
+    @id = params[:id]
+    @post = Post.get(@id)
+    erb :show
 end
 
