@@ -4,6 +4,7 @@ gem 'json', '~> 1.6'
 
 require 'sinatra'
 require 'sinatra/reloader'
+require 'bcrypt'
 require './model.rb'
 
 # Wellcome sinatra study
@@ -79,6 +80,10 @@ end
 get '/member/insert' do
     @name = params[:name]
     @email = params[:email]
-    Member.create(name: @name, email: @email, password: params[:password])
-    erb :joinsucceed
+    if params[:password] == params[:password_confirm]
+        Member.create(name: @name, email: @email, password: BCrypt::Password.create(params[:password]))
+        erb :joinsucceed
+    else
+        redirect "/"
+    end
 end
