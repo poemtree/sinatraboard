@@ -3,7 +3,13 @@ require 'data_mapper' # metagem, requires common plugins too.
 # print datamapper log
 DataMapper::Logger.new($stdout, :debug)
 
-DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/blog.db")
+configure :development do
+  DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/blog.db")
+end
+
+configure :production do
+  DataMapper::setup(:default, ENV["DATABASE_URL"])
+end
 
 class Post
   include DataMapper::Resource
