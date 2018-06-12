@@ -4,28 +4,7 @@ gem 'json', '~> 1.6'
 
 require 'sinatra'
 require 'sinatra/reloader'
-
-require 'data_mapper' # metagem, requires common plugins too.
-
-# print datamapper log
-DataMapper::Logger.new($stdout, :debug)
-
-DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/blog.db")
-
-class Post
-  include DataMapper::Resource
-  property :id, Serial
-  property :title, String
-  property :body, Text
-  property :created_at, DateTime
-end
-
-# Perform basic sanity checks and initialize all relationships
-# Call this when you've defined all your models
-DataMapper.finalize
-
-# automatically create the post table
-Post.auto_upgrade!
+require './model.rb'
 
 # Wellcome sinatra study
 # 1th.. we will use auto reload
@@ -69,3 +48,37 @@ get '/posts/:id' do
     erb :show
 end
 
+# Delete post
+get '/posts/destroy/:id' do
+    @id = params[:id]
+    Post.get(@id).destroy
+    erb :destroy
+end
+
+# Edit post
+get '/posts/edit/:id' do
+    @id = params[:id]
+    @post = Post.get(@id)
+    erb :edit
+end
+
+# Post Update
+get '/posts/update/:id' do
+    @id = params[:id]
+    @post = Post.get(@id)
+    @post.update(title: params[:title], body: params[:body])
+    erb :update
+end
+
+# Regist
+get '/member/regist' do
+    erb :regist
+end
+
+# Member Insert
+get '/member/insert' do
+    @name = params[:name]
+    @email = params[:email]
+    Member.create(name: @name, email: @email, password: params[:password])
+    erb :joinsucceed
+end
