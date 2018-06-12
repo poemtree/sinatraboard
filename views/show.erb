@@ -1,4 +1,9 @@
-<p><%= @post.id %></p>
-<p><%= @post.title %></p>
-<p><%= @post.body %></p>
-<p><%= @post.created_at %></p>
+<div class="container mt-3">
+    <p>id : <%= @post.id %></p>
+    <p>title : <%= @post.title %></p>
+    <p>body : <%= @post.body %></p>
+    <p>date : <%= @post.created_at %></p>
+    <a class="btn btn-outline-primary btn-sm" role="button" href="/posts/destroy/<%= @post.id %>">삭제</a>
+    <a class="btn btn-outline-primary btn-sm" role="button" href="/posts/edit/<%= @post.id %>">수정</a> <br>
+    <a class="btn btn-outline-primary btn-sm" role="button" href="/posts">돌아가기</a>
+</div>
